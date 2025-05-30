@@ -4,6 +4,7 @@ DROP procedure IF EXISTS `Insert_TipoDoc`;
 DELIMITER $$
 USE `sistema_hotel`$$
 CREATE PROCEDURE insert_TipoDoc(
+    IN p_idTipo INT,
 	IN p_nombre VARCHAR (255)
 )
 BEGIN

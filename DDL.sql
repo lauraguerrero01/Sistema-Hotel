@@ -23,11 +23,12 @@ CREATE TABLE Acomodacion (
 	idAcomodacion INT NOT NULL auto_increment,
     tipoAcomodacion VARCHAR (50) NOT NULL,
     capacidad INT NOT NULL,
-    descripcion VARCHAR (100)
+    descripcion VARCHAR (100),
+    PRIMARY KEY (idAcomodacion)
 );
 
 CREATE TABLE Habitacion (
-	idHabitación INT NOT NULL auto_increment,
+	idHabitacion INT NOT NULL auto_increment,
 	numHabit VARCHAR (10) NOT NULL UNIQUE ,
 	idAcomodacion INT NOT NULL, 
 	precioPorNoche DECIMAL (10, 2) NOT NULL,
@@ -46,9 +47,9 @@ CREATE TABLE Reserva (
     PRIMARY KEY (idReserva)
 );
 
-CREATE TABLE disponibilidad ( 
+CREATE TABLE Disponibilidad ( 
 idDisponibilidad INT NOT NULL auto_increment,
-idHbitacion INT NOT NULL,
+idHabitacion INT NOT NULL,
 fecha date NOT NULL,
 disponible boolean NOT NULL DEFAULT TRUE,
 PRIMARY KEY (idDisponibilidad)
@@ -63,13 +64,13 @@ ADD constraint fk_idAcomodacion_Habitacion
 foreign key (idAcomodacion) REFERENCES Acomodacion (idAcomodacion);
 
 ALTER TABLE Reserva
-ADD constraint fk_idCliente
+ADD constraint fk_idCliente_Reserva
 foreign key (idCliente) REFERENCES Cliente (idCliente);
 
 ALTER TABLE Reserva 
-ADD constraint fk_idHabitacion
+ADD constraint fk_idHabitacion_Reserva
 foreign key (idHabitacion) REFERENCES Habitacion (idHabitacion);
 
-ALTER TABLE Disponiblididad
-ADD constraint fk_idDisponibilidad
-foreign key (idDisponibilidad) REFERENCES Disponibilidad (idDisponibilidad);
+ALTER TABLE Disponibilidad 
+ADD constraint fk_idHabitacion_disponibilidad
+foreign key (idHabitacion) REFERENCES Habitacion (idHabitacion);
