@@ -31,29 +31,52 @@ CREATE TABLE Habitacion (
 	idHabitacion INT NOT NULL auto_increment,
 	numHabit VARCHAR (10) NOT NULL UNIQUE ,
 	idAcomodacion INT NOT NULL, 
-	precioPorNoche DECIMAL (10, 2) NOT NULL,
+	precioPorNoche DECIMAL (10, 3) NOT NULL,
 	estado VARCHAR (20) DEFAULT "Disponible",
-    PRIMARY KEY (idHabitacion)
+    PRIMARY KEY (idHabitacion),
+	CONSTRAINT chk_estado_habitacion CHECK (estado IN ("Disponible", "Ocupada", "Mantenimiento", "Limpieza"))
+
 );
 
+DROP TABLE IF EXISTS Reserva;
 CREATE TABLE Reserva (
 	idReserva INT NOT NULL auto_increment,
 	idCliente INT NOT NULL,
 	idHabitacion INT NOT NULL,
-	checkIn datetime NOT NULL, 
-	checkOut datetime NOT NULL,
-    precioTotal DECIMAL (10, 2),
-    estado VARCHAR (20) DEFAULT "Pendiente",
+	checkIn DATETIME NOT NULL, 
+	checkOut DATETIME NOT NULL,
+    fechaHoraReserva DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    precioTotal DECIMAL(10, 3),
+    estado ENUM("Pendiente", "Confirmada", "Cancelada", "Check-in", "Check-out") DEFAULT 'Pendiente',
     PRIMARY KEY (idReserva)
 );
+
+
 
 CREATE TABLE Disponibilidad ( 
 idDisponibilidad INT NOT NULL auto_increment,
 idHabitacion INT NOT NULL,
 fecha date NOT NULL,
 disponible boolean NOT NULL DEFAULT TRUE,
-PRIMARY KEY (idDisponibilidad)
+PRIMARY KEY (idDisponibilidad),
+UNIQUE (idHabitacion, fecha) -- Asegura que solo haya una entrada de disponibilidad por habitación por día.
 );
+
+
+CREATE TABLE HistorialReserva (
+    idHistorial INT AUTO_INCREMENT,
+    idReserva INT,
+    idCliente INT,
+    idHabitacion INT,
+    tipoAcomodacion VARCHAR(50),
+    fechaHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estadoActual VARCHAR(20),
+    diasEstadia INT,
+    costoTotal DECIMAL(10,3),
+    tipoAccion VARCHAR(50) DEFAULT "Actualización",
+    PRIMARY KEY (idHistorial)
+);
+
 
 ALTER TABLE Cliente
 ADD constraint FK_TipoDocumento_Cliente
@@ -74,3 +97,4 @@ foreign key (idHabitacion) REFERENCES Habitacion (idHabitacion);
 ALTER TABLE Disponibilidad 
 ADD constraint fk_idHabitacion_disponibilidad
 foreign key (idHabitacion) REFERENCES Habitacion (idHabitacion);
+

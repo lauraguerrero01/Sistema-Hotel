@@ -31,17 +31,17 @@ CALL InsertHabitacion("403", 4, 190.000);
 CALL InsertHabitacion("404", 4, 200.000); 
 
 -- Cliente
-CAll InsertCliente(126717327, "Juliana", "Correa", 3217628373, "julicorrea@gmail.com", 4);
+CAll InsertCliente(126717327, "Juliana", "Correa", "3217628373", "julicorrea@gmail.com", 4);
 CALL InsertCliente(106527887, "Ana", "Gómez", "3011234567", "ana.gomez@gmail.com", 1);      
 CALL InsertCliente(229480302, "Luis", "Pérez", "3022345678", "luis.perez@gmail.com", 3);       
-CALL InsertCliente(173812792, "Marta", "Rodríguez", 3033456789, "marta.r@hotmail.com", 1);   
-CALL InsertCliente(782048718, "Pablo", "Martínez", 3044567890, "pablo.m@gmail.com", 4);    
-CALL InsertCliente(503943289, "Sofía", "Hernández", 3055678901, "sofia.h@hotmail.com", 1);  
-CALL InsertCliente(613929381, "Diego", "Díaz", 3066789012, "diego.d@hotmail.com", 1);         
-CALL InsertCliente(702494246, "Emma", "Brown", 3077890123, "emma.b@gmail.com", 4);
-CALL InsertCliente(802847248, "Liam", "Jones", 3088901234, "liam.j@gmail.com", 1);  
-CALL InsertCliente(193824734, "Sara", "López", 3099012345, "sara.l@gmail.com", 3);         
-CALL InsertCliente(101462805, "Juan", "Castro", 3101234567, "juan.c@hotmail.com", 4);  
+CALL InsertCliente(173812792, "Marta", "Rodríguez", "3033456789", "marta.r@hotmail.com", 1);   
+CALL InsertCliente(782048718, "Pablo", "Martínez", "3044567890", "pablo.m@gmail.com", 4);    
+CALL InsertCliente(503943289, "Sofía", "Hernández", "3055678901", "sofia.h@hotmail.com", 1);  
+CALL InsertCliente(613929381, "Diego", "Díaz", "3066789012", "diego.d@hotmail.com", 1);         
+CALL InsertCliente(702494246, "Emma", "Brown", "3077890123", "emma.b@gmail.com", 4);
+CALL InsertCliente(802847248, "Liam", "Jones", "3088901234", "liam.j@gmail.com", 1);  
+CALL InsertCliente(193824734, "Sara", "López", "3099012345", "sara.l@gmail.com", 3);         
+CALL InsertCliente(101462805, "Juan", "Castro", "3101234567", "juan.c@hotmail.com", 4);  
 
 
 -- Reserva
@@ -69,3 +69,37 @@ CALL InsertReserva(
 CALL InsertReserva(
 	(SELECT idCliente FROM Cliente WHERE numdoc = 193824734),(SELECT idHabitacion FROM Habitacion WHERE numHabit = "302"),"2025-09-01","2025-09-05"
 );    
+
+
+UPDATE Reserva
+SET estado = "Cancelada"
+WHERE idReserva = 5;
+
+UPDATE Reserva
+SET estado = "Check-In"
+WHERE idReserva = 3;
+
+UPDATE Reserva
+SET estado = "Check-Out"
+WHERE idReserva = 7;
+
+UPDATE Reserva
+SET estado = "Pendiente"
+WHERE idReserva = 8;
+
+UPDATE Reserva
+SET estado = "Cancelada"
+WHERE idReserva = 2;
+
+UPDATE Reserva
+SET estado = "Check-In"
+WHERE idReserva = 4;
+
+UPDATE Reserva
+SET estado = "Check-Out"
+WHERE idReserva = 6;
+
+UPDATE Reserva
+SET estado = "Pendiente"
+WHERE idReserva = 1;
+
